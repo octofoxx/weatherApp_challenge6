@@ -1,0 +1,21 @@
+#introHeader{
+   color: aliceblue;
+    background-color: rgb(59, 59, 175);
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+button{
+    background-color:  rgb(59, 59, 175);
+    color: aliceblue;
+    cursor: pointer;
+}
+
+button:hover{
+    opacity: .9;
+}
+
+button:active{
+    opacity: .7;
+}
