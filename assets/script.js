@@ -1,4 +1,4 @@
-const APIkey = "54f241fdd09f1d10ee0b6e1696fe5d01"
+const APIkey = "&appid=54f241fdd09f1d10ee0b6e1696fe5d01"
 
 var currentWeather = "https://api.openweathermap.org/data/2.5/weather?q="
 
@@ -14,7 +14,7 @@ var citySearch = document.getElementById("citySearch")
 //Todo: make call to openweather
 
 var getCityWeather = function(city){
-  var APIcall=  currentWeather + city + APIkey;
+  var APIcall=  currentWeather+city+APIkey;
   fetch(APIcall)
   .then(function(response){
     return response.json();
@@ -24,20 +24,18 @@ var getCityWeather = function(city){
   });
 }
 
-
-//handle user's input for search
-
-searchArea.addEventListener("click",submitHandler);
-
 var submitHandler = function(event){
     event.preventDefault();
     var cityName = citySearch.value.trim();
+    console.log(cityName);
 
     if (cityName){
         getCityWeather(cityName);
         citySearch.innerHTML=("");
     }
 };
+
+searchArea.addEventListener("click",submitHandler);
 
 //display current weather: icon, date, temp, wind, humidity 
 
