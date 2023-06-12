@@ -18,9 +18,19 @@
         <ul id="searchHistory"></ul>
     </aside>
     <div id="weatherDisplay">
-        <div id="mainDisplay"></div>
-        <div id="5dayDisplay"></div>
+        <div id="mainDisplay">
+            <h3 id="currentCity">City: </h3>
+            <img id="currentIcon">
+            <p id="temp">Temp: </p>
+            <p id="humid">Humidity: </p>
+            <p id="wind">Wind: </p>
+        </div>
+        <div id="5dayDisplay">
+            <h3>5 Day Forecast</h3>
+        </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.3/dayjs.min.js"></script>
     <script src="./assets/script.js"></script> 
 </body>
 </html>
