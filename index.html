@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="has-background-grey-light" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,16 +18,20 @@
         <button>Search</button>
         <ul id="searchHistory"></ul>
     </aside>
-    <div id="weatherDisplay">
-        <div id="mainDisplay">
-            <h3 class="title" id="currentCity">City: </h3>
-            <img id="currentIcon">
-            <p id="temp">Temp: </p>
-            <p id="humid">Humidity: </p>
-            <p id="wind">Wind: </p>
+    <div class="container is-fluid" id="weatherDisplay">
+        <div>
+            <h3 class="title is-3">City: </h3>
+            <div>
+                <h3 class ="title is-4" id="currentCity"></h3>
+                <img id="currentIcon">
+                <p id="temp">Temp: </p>
+                <p id="humid">Humidity: </p>
+                <p id="wind">Wind: </p>
+            </div>
         </div>
-        <div id="5dayDisplay">
-            <h3>5 Day Forecast</h3>
+        <div>
+            <h3 class="title is-4">5 Day Forecast</h3>
+            <div id="5dayDisplay">
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

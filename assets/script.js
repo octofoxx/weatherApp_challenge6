@@ -64,12 +64,13 @@ let saveSearchHistory = function (city) {
 
               // creates 5 day forecast
               let fiveDays =`
-              <div class="columns">
-                  <div class="column">
+              <div class = "column">
+                  <div>
                       <h5>` + dayjs(data.list[i].dt * 1000).format("MM/DD/YYYY") + `</h5>
                       <img src="https://openweathermap.org/img/wn/` + data.list[i].weather[0].icon + `.png">
-                      <p class=>Temp: ` + data.list[i].main.temp + `</p>
-                      <p class=>Humidity: ` + data.list[i].main.humidity + `</p>
+                      <p>Temp: ` + data.list[i].main.temp + `</p>
+                      <p>Humidity: ` + data.list[i].main.humidity + `</p>
+                      <p>Wind: ` + data.list[i].wind.speed + ` <p>
                   </div>
               </div>
               `;
