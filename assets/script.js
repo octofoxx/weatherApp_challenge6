@@ -62,20 +62,20 @@ let saveSearchHistory = function (city) {
           // get every 8th value (24hours) in the returned array from the api call
           for(i = 7; i <= data.list.length; i += 8){
 
-              // creates 5 day forecast
+              // creates 5 day forecast. backtick (`) is a template literal allowing multiline strings
               let fiveDays =`
-              <div class = "column">
+              <div class = "is-inline-block">
                   <div>
                       <h5>` + dayjs(data.list[i].dt * 1000).format("MM/DD/YYYY") + `</h5>
                       <img src="https://openweathermap.org/img/wn/` + data.list[i].weather[0].icon + `.png">
-                      <p>Temp: ` + data.list[i].main.temp + `</p>
-                      <p>Humidity: ` + data.list[i].main.humidity + `</p>
-                      <p>Wind: ` + data.list[i].wind.speed + ` <p>
+                      <p>Temp: ` + data.list[i].main.temp + "°F" + `</p>
+                      <p>Humidity: ` + data.list[i].main.humidity + "%" + `</p>
+                      <p>Wind: ` + data.list[i].wind.speed + "mph" + ` <p>
                   </div>
               </div>
               `;
 
-              // append the day to the five-day forecast
+              // appends the results to the five-day forecast
               $("#5dayDisplay").append(fiveDays);
          }
       })
