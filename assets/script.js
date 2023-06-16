@@ -10,7 +10,7 @@ var lastCitySearched = ""
 //Todo: make call to openweather
 
 var getCityWeather = function(city){
-  var APIcall=  currentWeather+city+APIkey;
+  var APIcall=  currentWeather+city+APIkey+"&units=imperial";
   fetch(APIcall)
   .then(function(response){
     return response.json();
@@ -32,7 +32,8 @@ var submitHandler = function(event){
 };
 let displayWeather = function(weatherData) {
 
-  // format and display the values
+  // displays the current weather for selected city.
+  //dayjs formats the info to have the date displayed
   $("#currentCity").text(weatherData.name + " (" + dayjs(weatherData.dt * 1000).format("MM/DD/YYYY") + ") ").append(`<img src="https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png"></img>`);
   $("#temp").text("Temperature: " + weatherData.main.temp.toFixed(1) + "°F");
   $("#humid").text("Humidity: " + weatherData.main.humidity + "%");
@@ -40,15 +41,44 @@ let displayWeather = function(weatherData) {
 
   lastCitySearched = weatherData.name;
 
-  // save to the search history using the api's name value
+  // saves city used to history
   saveSearchHistory(weatherData.name);
 };
 
 let saveSearchHistory = function (city) {
+  //if there is anything in search history, adds a link to re-click it and show to page again
   if(!searchHistory.includes(city)){
       searchHistory.push(city);
       $("#searchHistory").append("<a href='#' id='" + city + "'>" + city + "</a>")
   } 
+
+  fetch("https://api.openweathermap.org/data/2.5/forecast?q=" + city + APIkey+"&units=imperial")
+  .then(function(response) {
+      response.json().then(function(data) {
+
+          // clear any previous entries in the 5day forecast
+          $("#5dayDisplay").empty();
+
+          // get every 8th value (24hours) in the returned array from the api call
+          for(i = 7; i <= data.list.length; i += 8){
+
+              // creates 5 day forecast
+              let fiveDays =`
+              <div class="columns">
+                  <div class="column">
+                      <h5>` + dayjs(data.list[i].dt * 1000).format("MM/DD/YYYY") + `</h5>
+                      <img src="https://openweathermap.org/img/wn/` + data.list[i].weather[0].icon + `.png">
+                      <p class=>Temp: ` + data.list[i].main.temp + `</p>
+                      <p class=>Humidity: ` + data.list[i].main.humidity + `</p>
+                  </div>
+              </div>
+              `;
+
+              // append the day to the five-day forecast
+              $("#5dayDisplay").append(fiveDays);
+         }
+      })
+  });
 
   // save the searchHistory array to local storage
   localStorage.setItem("weatherSearchHistory", JSON.stringify(searchHistory));
@@ -64,7 +94,7 @@ let loadSearchHistory = function() {
   searchHistory = JSON.parse(localStorage.getItem("weatherSearchHistory"));
   lastCitySearched = JSON.parse(localStorage.getItem("lastCitySearched"));
 
-  // if nothing in localStorage, create an empty searchHistory array and an empty lastCitySearched string
+  // if nothing is in local storage, makes the empty array and displays nothing to page
   if (!searchHistory) {
       searchHistory = []
   }
@@ -73,13 +103,13 @@ let loadSearchHistory = function() {
       lastCitySearched = ""
   }
 
-  // clear any previous values from th search-history ul
+  // clear out the search history 
   $("#searchHistory").empty();
 
-  // for loop that will run through all the citys found in the array
+  // for loop that will run through all the cities in the array
   for(i = 0 ; i < searchHistory.length ;i++) {
 
-      // add the city as a link, set it's id, and append it to the search-history ul
+      //creates the list of prior searched cities
       $("#searchHistory").append("<a href='#' id='" + searchHistory[i] + "'>" + searchHistory[i] + "</a>");
   }
 };
@@ -88,15 +118,8 @@ loadSearchHistory();
 
 $("#searchArea").on("click",submitHandler);
 
+//click function for the prior history list to make them re-populate to page
 $("#searchHistory").on("click", function(event){
-  // get the links id value
   let prevCity = $(event.target).closest("a").attr("id");
-  // pass it's id value to the getCityWeather function
   getCityWeather(prevCity);
 });
-
-//display current weather: icon, date, temp, wind, humidity 
-
-//display 5 day forecast: icon, date, temp, wind, humidity 
- 
-//save search history and display to page
